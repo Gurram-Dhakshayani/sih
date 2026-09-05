@@ -1,0 +1,345 @@
+/* ==========================================================================
+   SCREEN 2 — EXPENDITURE & TIMELINE ANALYSIS (PROJECT DEEP-DIVE CASE FILE)
+   Forensic Case-File Split Panel, Bullet Chart Ruler, ECG Heartbeat Timeline,
+   Terminal-Style Monospace Insights Stream
+   ========================================================================== */
+
+.casefile-screen-wrapper {
+  padding: 24px 32px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   CASE FILE TAB HEADER
+   -------------------------------------------------------------------------- */
+.casefile-tab-header {
+  background: #141926;
+  border: 1px solid var(--border-hairline);
+  border-bottom: 2px solid rgba(242, 179, 65, 0.4);
+  border-radius: 12px 12px 4px 4px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.casefile-title-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.casefile-tab-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: #E2E8F0;
+}
+
+.casefile-heading {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.2px;
+}
+
+/* Rotated Stamp-Style Rubber Badge */
+.casefile-rubber-stamp {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: #EF4444;
+  border: 2px solid #EF4444;
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transform: rotate(-3.5deg);
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.35);
+  display: inline-block;
+  user-select: none;
+}
+
+.casefile-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.casefile-selector-dropdown {
+  background: #0D111A;
+  border: 1px solid var(--border-hairline);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #F1F5F9;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* Meta summary bar */
+.casefile-meta-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  background: #0E131E;
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
+  padding: 12px 18px;
+}
+
+.meta-field-cell {
+  display: flex;
+  flex-direction: column;
+}
+.meta-field-key {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  color: #64748B;
+}
+.meta-field-val {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #E2E8F0;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   SPLIT PANELS: EXPENDITURE & TIMELINE
+   -------------------------------------------------------------------------- */
+.casefile-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Left Panel: Horizontal Bullet Chart / Ruler */
+.expenditure-panel {
+  background: #121620;
+  border: 1px solid var(--border-hairline);
+  border-radius: 12px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: var(--shadow-card);
+}
+
+.panel-card-title {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bullet-chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.bullet-chart-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bullet-labels-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bullet-entity-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #E2E8F0;
+}
+
+.bullet-unit-cost {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Ruler track */
+.bullet-ruler-track {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background: #090D15;
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  overflow: visible;
+}
+
+.bullet-fill-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.bullet-fill-target {
+  background: linear-gradient(90deg, #DC2626 0%, #EF4444 100%);
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.4);
+}
+
+.bullet-fill-benchmark {
+  background: linear-gradient(90deg, #334155 0%, #475569 100%);
+}
+
+.bullet-overflow-marker {
+  position: absolute;
+  top: -18px;
+  right: -8px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Right Panel: ECG Heartbeat Timeline Strip */
+.timeline-panel {
+  background: #121620;
+  border: 1px solid var(--border-hairline);
+  border-radius: 12px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: var(--shadow-card);
+}
+
+.ecg-timeline-strip-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 20px 0 10px 0;
+  position: relative;
+}
+
+.ecg-strip-svg-wrap {
+  width: 100%;
+  position: relative;
+}
+
+/* Pulsing Red Anomaly Segment */
+.ecg-pulse-segment {
+  stroke: #EF4444;
+  stroke-width: 3.5;
+  filter: drop-shadow(0 0 6px #EF4444);
+  animation: ecgRedPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes ecgRedPulse {
+  0% { opacity: 0.6; stroke-width: 3; }
+  50% { opacity: 1; stroke-width: 4.5; }
+  100% { opacity: 0.6; stroke-width: 3; }
+}
+
+.milestone-events-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.milestone-card-item {
+  background: #0E121B;
+  border: 1px solid var(--border-hairline);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.milestone-card-item.anomalous {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.milestone-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #CBD5E1;
+}
+
+.milestone-date-mono {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: #94A3B8;
+}
+
+.milestone-anomaly-pill {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: #EF4444;
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   BOTTOM TERMINAL-STYLE FORENSIC INSIGHTS STREAM
+   -------------------------------------------------------------------------- */
+.casefile-insights-terminal {
+  background: #090C13;
+  border: 1px solid var(--border-hairline);
+  border-left: 3px solid var(--accent-sentinel);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+}
+
+.terminal-title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent-sentinel);
+  letter-spacing: 1px;
+}
+
+.terminal-output-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 140px;
+  overflow-y: auto;
+}

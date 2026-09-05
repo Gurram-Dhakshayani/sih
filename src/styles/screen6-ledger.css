@@ -1,0 +1,305 @@
+/* ==========================================================================
+   SCREEN 6 — TAMPER-PROOF AUDIT TRAIL (VERTICAL BLOCKCHAIN LEDGER FEED)
+   Vertical Chain of Blocks, Chain-Link Midpoint Connectors, Hash Scanning Shimmer,
+   Sequential Cryptographic Verification Cascade Animation (~80ms)
+   ========================================================================== */
+
+.ledger-screen-wrapper {
+  padding: 24px 32px 48px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   TOP: CHAIN STATUS: VERIFIED BANNER & INTEGRITY CHECK TRIGGER
+   -------------------------------------------------------------------------- */
+.ledger-banner-header {
+  background: linear-gradient(135deg, #0E1824 0%, #0F201C 100%);
+  border: 1.5px solid rgba(34, 197, 94, 0.4);
+  border-radius: 14px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 24px rgba(34, 197, 94, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-left-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.banner-status-shield {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1.5px solid #22C55E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #22C55E;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  animation: bannerShieldPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes bannerShieldPulse {
+  0% { transform: scale(1); box-shadow: 0 0 12px rgba(34, 197, 94, 0.3); }
+  50% { transform: scale(1.04); box-shadow: 0 0 28px rgba(34, 197, 94, 0.6); }
+  100% { transform: scale(1); box-shadow: 0 0 12px rgba(34, 197, 94, 0.3); }
+}
+
+.banner-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.banner-main-title {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.banner-status-verified-text {
+  color: #22C55E;
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+.banner-meta-inline {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #94A3B8;
+  display: flex;
+  gap: 16px;
+}
+
+/* Verify Chain Integrity CTA Button */
+.btn-verify-chain-integrity {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1.5px solid #22C55E;
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-verify-chain-integrity:hover {
+  background: #22C55E;
+  color: #0A0E16;
+  box-shadow: 0 6px 24px rgba(34, 197, 94, 0.5);
+}
+
+.btn-verify-chain-integrity.verifying {
+  border-color: var(--accent-sentinel);
+  background: rgba(242, 179, 65, 0.2);
+  color: #FFFFFF;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   VERTICAL BLOCKCHAIN LEDGER FEED
+   -------------------------------------------------------------------------- */
+.blockchain-chain-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 10px 0;
+}
+
+/* Vertical Connector Spine Line */
+.blockchain-spine-line {
+  position: absolute;
+  top: 40px;
+  bottom: 40px;
+  left: 50%;
+  width: 2px;
+  background: linear-gradient(180deg, #22C55E 0%, rgba(76, 141, 255, 0.3) 50%, #22C55E 100%);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* Individual Block Card in Chain */
+.block-card-wrapper {
+  width: 100%;
+  max-width: 920px;
+  position: relative;
+  z-index: 5;
+  margin-bottom: 24px;
+}
+
+.block-card-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+.block-card {
+  background: #121620;
+  border: 1px solid var(--border-hairline);
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.block-card:hover {
+  background: #161C2A;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Cascading Cryptographic Flash Effect (~80ms apart) */
+.block-card.flash-verify {
+  border-color: #22C55E !important;
+  background: rgba(34, 197, 94, 0.18) !important;
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.5) !important;
+  transform: scale(1.015);
+}
+
+/* Block Card Header */
+.block-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.block-num-badge {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: #FFFFFF;
+  background: #1C2436;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.block-timestamp-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #94A3B8;
+}
+
+/* Action & Auditor */
+.block-action-title {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #F8FAFC;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.block-auditor-line {
+  font-size: 12px;
+  color: #CBD5E1;
+}
+.block-auditor-line span {
+  color: var(--accent-sentinel);
+  font-weight: 600;
+}
+
+.block-details-text {
+  font-size: 12.5px;
+  color: #94A3B8;
+  line-height: 1.4;
+  background: #0B0E16;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hash & Shimmer Animation */
+.block-crypto-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 10px;
+}
+
+.crypto-hash-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.crypto-hash-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  color: #64748B;
+}
+
+.crypto-hash-val {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #22C55E;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Scanning Shimmer Animation on Hash */
+.crypto-hash-val::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+  animation: hashShimmerSweep 3.5s infinite;
+}
+
+@keyframes hashShimmerSweep {
+  0% { left: -100%; }
+  40% { left: 160%; }
+  100% { left: 160%; }
+}
+
+/* Midpoint Chain-Link Glyphs */
+.chain-link-midpoint {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0E131E;
+  border: 1.5px solid #22C55E;
+  color: #22C55E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -14px auto -14px auto;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}

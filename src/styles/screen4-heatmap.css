@@ -1,0 +1,268 @@
+/* ==========================================================================
+   SCREEN 4 — DISTRICT RISK HEATMAP
+   Map-First Full-Bleed Layout, Glowing Hex Thermal Map with Burn Shader,
+   Top-to-Bottom Surveillance Scan Line, Vertical Summary Stack
+   ========================================================================== */
+
+.heatmap-screen-layout {
+  width: 100%;
+  height: 100%;
+  padding: 20px 28px 28px 28px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   LEFT: DOMINANT MAP CONTAINER (~65%)
+   -------------------------------------------------------------------------- */
+.heatmap-map-section {
+  position: relative;
+  height: 100%;
+  min-height: 540px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Surveillance Scanline */
+.heatmap-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(242, 179, 65, 0.6) 50%, transparent 100%);
+  box-shadow: 0 0 12px rgba(242, 179, 65, 0.4);
+  animation: heatmapSweepVertical 7s ease-in-out infinite;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@keyframes heatmapSweepVertical {
+  0% { transform: translateY(0px); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(540px); opacity: 0; }
+}
+
+/* Click Ripple Ring */
+.hex-click-ripple {
+  animation: hexRippleExpand 0.75s cubic-bezier(0.1, 0.2, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes hexRippleExpand {
+  0% { r: 4px; opacity: 0.9; stroke-width: 2.5px; }
+  100% { r: 38px; opacity: 0; stroke-width: 0.5px; }
+}
+
+/* Hex Hover & Selection */
+.hex-district-group:hover .hex-cell-polygon {
+  stroke: var(--accent-sentinel) !important;
+  stroke-width: 2.2px !important;
+}
+
+.hex-legend-overlay {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  gap: 12px;
+  background: rgba(14, 18, 27, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-hairline);
+  padding: 6px 14px;
+  border-radius: 20px;
+  z-index: 12;
+}
+
+.legend-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #CBD5E1;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   RIGHT: SELECTED DISTRICT SUMMARY (VERTICAL STAT STACK)
+   -------------------------------------------------------------------------- */
+.district-summary-stack {
+  background: #121722;
+  border: 1px solid var(--border-hairline);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: var(--shadow-card);
+  overflow-y: auto;
+}
+
+.summary-header-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-district-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.summary-state-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #94A3B8;
+}
+
+/* Big Circular Score Ring */
+.district-score-ring-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  position: relative;
+}
+
+.score-ring-svg {
+  width: 140px;
+  height: 140px;
+}
+
+.score-ring-center-val {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ring-score-big {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 800;
+  color: #EF4444;
+}
+
+.ring-score-caption {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #94A3B8;
+  letter-spacing: 1px;
+}
+
+/* Slim Horizontal Project Breakdown Bars */
+.district-counts-bars-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.count-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.count-bar-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.count-bar-name {
+  color: #CBD5E1;
+}
+
+.count-bar-num {
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.count-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #090C14;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.count-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* Top Risk Factors Pill Chips */
+.risk-factors-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.risk-factors-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.risk-factors-chips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.factor-pill-chip {
+  background: #161C2A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid #EF4444;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  color: #E2E8F0;
+  line-height: 1.4;
+}
+
+.factor-pill-chip.severity-med {
+  border-left-color: #F59E0B;
+}
+
+/* Action Trigger */
+.btn-inspect-district-projects {
+  width: 100%;
+  padding: 10px;
+  background: rgba(242, 179, 65, 0.12);
+  border: 1px solid rgba(242, 179, 65, 0.35);
+  color: var(--accent-sentinel);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.btn-inspect-district-projects:hover {
+  background: var(--accent-sentinel);
+  color: #0A0E16;
+}

@@ -1,0 +1,231 @@
+/* ==========================================================================
+   MPLAD SENTINEL — GLOBAL FORENSIC DESIGN SYSTEM
+   Dark Forensic Control-Room Aesthetic (Near-black, Hairline borders, Monospace data)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+:root {
+  /* Surface & Base Colors */
+  --bg-base: #0A0E16;
+  --bg-vignette: radial-gradient(circle at 50% 30%, #121824 0%, #080C14 70%, #05080E 100%);
+  --surface-panel: #12161F;
+  --surface-panel-alt: #161B26;
+  --surface-overlay: rgba(18, 22, 31, 0.85);
+  --border-hairline: rgba(255, 255, 255, 0.07);
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-active: rgba(242, 179, 65, 0.4);
+
+  /* Brand Signal & Accent Colors */
+  --accent-sentinel: #F2B341; /* Electric amber-gold "Sentinel" signal color */
+  --accent-sentinel-glow: rgba(242, 179, 65, 0.25);
+  --login-blue: #4C8DFF;      /* Security & Trust Blue for Login gate */
+  --login-blue-glow: rgba(76, 141, 255, 0.3);
+
+  /* Forensic Risk Tri-Color System */
+  --risk-high: #EF4444;       /* High Risk Red */
+  --risk-high-bg: rgba(239, 68, 68, 0.12);
+  --risk-high-glow: rgba(239, 68, 68, 0.35);
+  --risk-med: #F59E0B;        /* Medium Risk Amber */
+  --risk-med-bg: rgba(245, 158, 11, 0.12);
+  --risk-med-glow: rgba(245, 158, 11, 0.3);
+  --risk-low: #22C55E;        /* Low Risk Green */
+  --risk-low-bg: rgba(34, 197, 94, 0.12);
+  --risk-low-glow: rgba(34, 197, 94, 0.25);
+  --risk-info: #3B82F6;       /* Neutral Information Blue */
+  --risk-info-bg: rgba(59, 130, 246, 0.12);
+
+  /* Typography */
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Space Mono', 'Consolas', monospace;
+
+  /* Shadows & Elevation */
+  --shadow-card: 0 8px 24px -4px rgba(0, 0, 0, 0.6), 0 2px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-glow-amber: 0 0 24px rgba(242, 179, 65, 0.18);
+  --shadow-glow-red: 0 0 24px rgba(239, 68, 68, 0.25);
+}
+
+/* Global Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-base);
+  background-image: var(--bg-vignette);
+  color: #F1F5F9;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+/* Custom Sleek Monospace Utility */
+.font-mono {
+  font-family: var(--font-mono) !important;
+  letter-spacing: -0.2px;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 14, 22, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Button & Interactive Resets */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+  transition: all 0.18s ease;
+}
+
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--accent-sentinel);
+  outline-offset: 2px;
+}
+
+input, select {
+  font-family: var(--font-ui);
+  color: #F8FAFC;
+  background: #0D111A;
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus {
+  border-color: rgba(242, 179, 65, 0.5);
+  box-shadow: 0 0 12px rgba(242, 179, 65, 0.15);
+}
+
+/* Glassmorphism Surface Panel */
+.forensic-panel {
+  background: var(--surface-panel);
+  border: 1px solid var(--border-hairline);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.forensic-panel-alt {
+  background: var(--surface-panel-alt);
+  border: 1px solid var(--border-hairline);
+  border-radius: 12px;
+}
+
+/* Badges & Tiers */
+.badge-risk-high {
+  background: var(--risk-high-bg);
+  color: var(--risk-high);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-risk-med {
+  background: var(--risk-med-bg);
+  color: var(--risk-med);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-risk-low {
+  background: var(--risk-low-bg);
+  color: var(--risk-low);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Live Sentinel Signal Pulse */
+.sentinel-pulse {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-sentinel);
+  box-shadow: 0 0 10px var(--accent-sentinel);
+}
+.sentinel-pulse::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-sentinel);
+  animation: sentinelPulseRing 2.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+@keyframes sentinelPulseRing {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Viewport Containers */
+#app {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.screen-view {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  transform: scale(0.995);
+}
+
+.screen-view.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  z-index: 10;
+}
