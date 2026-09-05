@@ -68,50 +68,35 @@ class SentinelApp {
   parseUserFromInput(inputStr) {
     let clean = (inputStr || '').trim();
     if (!clean) {
-      return {
-        name: 'Dr. S. K. Ramanathan',
-        initials: 'SR',
-        role: 'Lead Auditor (Dy. CAG)',
-        email: 'ramanathan.cag@gov.in'
-      };
+      clean = 'Dr. S. K. Ramanathan';
     }
 
-    // Check if user exists in registered database
-    const lower = clean.toLowerCase();
-    if (this.registeredUsers[lower]) {
-      return this.registeredUsers[lower];
-    }
-
-    let email = '';
-    let name = clean;
+    let displayName = clean;
+    let initials = 'U';
 
     if (clean.includes('@')) {
-      email = clean;
-      let partBeforeAt = clean.split('@')[0];
-      name = partBeforeAt
-        .replace(/[._]/g, ' ')
-        .trim();
-      if (!name) name = partBeforeAt;
-      name = name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      let handle = clean.split('@')[0];
+      if (handle.length >= 2) {
+        initials = handle.substring(0, 2).toUpperCase();
+      } else if (handle.length === 1) {
+        initials = handle[0].toUpperCase();
+      }
     } else {
-      name = clean.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-    }
-
-    const words = name.split(' ').filter(Boolean);
-    let initials = 'U';
-    if (words.length >= 2) {
-      initials = (words[0][0] + words[words.length - 1][0]).toUpperCase();
-    } else if (words.length === 1 && words[0].length >= 2) {
-      initials = words[0].substring(0, 2).toUpperCase();
-    } else if (words.length === 1) {
-      initials = words[0][0].toUpperCase();
+      let words = clean.split(' ').filter(Boolean);
+      if (words.length >= 2) {
+        initials = (words[0][0] + words[words.length - 1][0]).toUpperCase();
+      } else if (clean.length >= 2) {
+        initials = clean.substring(0, 2).toUpperCase();
+      } else {
+        initials = clean[0].toUpperCase();
+      }
     }
 
     return {
-      name: name,
+      name: displayName,
       initials: initials,
-      role: 'Forensic Audit Officer (CAG)',
-      email: email || `${clean.toLowerCase().replace(/\s+/g, '.')}@cag.gov.in`
+      role: 'Lead Auditor (CAG)',
+      email: clean.includes('@') ? clean : `${clean}@cag.gov.in`
     };
   }
 
@@ -135,14 +120,9 @@ class SentinelApp {
   bindLoginEvents() {
     const tabSignIn = document.getElementById('tabSignIn');
     const tabSignUp = document.getElementById('tabSignUp');
-    const signInFormView = document.getElementById('signInFormView');
-    const signUpFormView = document.getElementById('signUpFormView');
-    const authFormTitle = document.getElementById('authFormTitle');
-    const authFormSub = document.getElementById('authFormSub');
 
     const btnSignIn = document.getElementById('btnSignIn');
     const btnSignUpSubmit = document.getElementById('btnSignUpSubmit');
-    const btnGovSSO = document.getElementById('btnGovSSO');
     const togglePassBtn = document.getElementById('togglePasswordBtn');
     const passwordInput = document.getElementById('loginPassword');
     const loginInput = document.getElementById('loginUsername');
@@ -153,19 +133,11 @@ class SentinelApp {
       tabSignIn.addEventListener('click', () => {
         tabSignIn.classList.add('active');
         tabSignUp.classList.remove('active');
-        signInFormView.style.display = 'block';
-        signUpFormView.style.display = 'none';
-        if (authFormTitle) authFormTitle.textContent = 'Welcome Back!';
-        if (authFormSub) authFormSub.textContent = 'Sign in to access your audit dashboard';
       });
 
       tabSignUp.addEventListener('click', () => {
         tabSignUp.classList.add('active');
         tabSignIn.classList.remove('active');
-        signInFormView.style.display = 'none';
-        signUpFormView.style.display = 'block';
-        if (authFormTitle) authFormTitle.textContent = 'Create New Account';
-        if (authFormSub) authFormSub.textContent = 'Register as an authorized audit officer';
       });
     }
 
@@ -183,63 +155,23 @@ class SentinelApp {
       this.navigateToSubscreen('screen-1-radar');
     };
 
-    // Sign In Handler
-    const handleSignIn = (isSSO = false) => {
+    const handleAuthAction = () => {
       const inputVal = loginInput ? loginInput.value : '';
-      const user = isSSO 
-        ? { name: 'Officer Parichay', initials: 'GO', role: 'Government SSO Auditor', email: 'sso.officer@gov.in' }
-        : this.parseUserFromInput(inputVal);
-
+      const user = this.parseUserFromInput(inputVal);
       performLoginTransition(user);
     };
 
-    // Sign Up Handler
-    const handleSignUp = () => {
-      const fullNameInput = document.getElementById('signUpFullName');
-      const emailInput = document.getElementById('signUpEmail');
-      const roleSelect = document.getElementById('signUpRole');
-
-      const fullName = (fullNameInput ? fullNameInput.value : '').trim() || 'Audit Officer';
-      const email = (emailInput ? emailInput.value : '').trim() || 'user@cag.gov.in';
-      const role = roleSelect ? roleSelect.value : 'Lead Forensic Auditor (CAG)';
-
-      // Calculate initials
-      const words = fullName.split(' ').filter(Boolean);
-      let initials = 'AO';
-      if (words.length >= 2) {
-        initials = (words[0][0] + words[words.length - 1][0]).toUpperCase();
-      } else if (words.length === 1 && words[0].length >= 2) {
-        initials = words[0].substring(0, 2).toUpperCase();
-      } else if (words.length === 1) {
-        initials = words[0][0].toUpperCase();
-      }
-
-      const newUser = {
-        name: fullName,
-        initials: initials,
-        role: role,
-        email: email
-      };
-
-      // Register in memory
-      this.registeredUsers[email.toLowerCase()] = newUser;
-      this.registeredUsers[fullName.toLowerCase()] = newUser;
-
-      performLoginTransition(newUser);
-    };
-
-    if (btnSignIn) btnSignIn.addEventListener('click', () => handleSignIn(false));
-    if (btnGovSSO) btnGovSSO.addEventListener('click', () => handleSignIn(true));
-    if (btnSignUpSubmit) btnSignUpSubmit.addEventListener('click', handleSignUp);
+    if (btnSignIn) btnSignIn.addEventListener('click', handleAuthAction);
+    if (btnSignUpSubmit) btnSignUpSubmit.addEventListener('click', handleAuthAction);
 
     if (loginInput) {
       loginInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handleSignIn(false);
+        if (e.key === 'Enter') handleAuthAction();
       });
     }
     if (passwordInput) {
       passwordInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handleSignIn(false);
+        if (e.key === 'Enter') handleAuthAction();
       });
     }
 
