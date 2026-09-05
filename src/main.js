@@ -120,6 +120,10 @@ class SentinelApp {
   bindLoginEvents() {
     const tabSignIn = document.getElementById('tabSignIn');
     const tabSignUp = document.getElementById('tabSignUp');
+    const signInFormView = document.getElementById('signInFormView');
+    const signUpFormView = document.getElementById('signUpFormView');
+    const authFormTitle = document.getElementById('authFormTitle');
+    const authFormSub = document.getElementById('authFormSub');
 
     const btnSignIn = document.getElementById('btnSignIn');
     const btnSignUpSubmit = document.getElementById('btnSignUpSubmit');
@@ -133,11 +137,19 @@ class SentinelApp {
       tabSignIn.addEventListener('click', () => {
         tabSignIn.classList.add('active');
         tabSignUp.classList.remove('active');
+        if (signInFormView) signInFormView.style.display = 'block';
+        if (signUpFormView) signUpFormView.style.display = 'none';
+        if (authFormTitle) authFormTitle.textContent = 'Welcome Back!';
+        if (authFormSub) authFormSub.textContent = 'Enter your email or username to access the dashboard';
       });
 
       tabSignUp.addEventListener('click', () => {
         tabSignUp.classList.add('active');
         tabSignIn.classList.remove('active');
+        if (signInFormView) signInFormView.style.display = 'none';
+        if (signUpFormView) signUpFormView.style.display = 'block';
+        if (authFormTitle) authFormTitle.textContent = 'Create New Account';
+        if (authFormSub) authFormSub.textContent = 'Fill in your details to register as an officer';
       });
     }
 
@@ -155,23 +167,44 @@ class SentinelApp {
       this.navigateToSubscreen('screen-1-radar');
     };
 
-    const handleAuthAction = () => {
-      const inputVal = loginInput ? loginInput.value : '';
-      const user = this.parseUserFromInput(inputVal);
-      performLoginTransition(user);
-    };
+    // Sign In Submit
+    if (btnSignIn) {
+      btnSignIn.addEventListener('click', () => {
+        const inputVal = loginInput ? loginInput.value : '';
+        const user = this.parseUserFromInput(inputVal);
+        performLoginTransition(user);
+      });
+    }
 
-    if (btnSignIn) btnSignIn.addEventListener('click', handleAuthAction);
-    if (btnSignUpSubmit) btnSignUpSubmit.addEventListener('click', handleAuthAction);
+    // Sign Up Submit
+    if (btnSignUpSubmit) {
+      btnSignUpSubmit.addEventListener('click', () => {
+        const nameInput = document.getElementById('signUpFullName');
+        const emailInput = document.getElementById('signUpEmail');
+        
+        const typedName = nameInput ? nameInput.value.trim() : '';
+        const typedEmail = emailInput ? emailInput.value.trim() : '';
+        
+        const rawInput = typedName || typedEmail || 'Audit Officer';
+        const user = this.parseUserFromInput(rawInput);
+        performLoginTransition(user);
+      });
+    }
 
     if (loginInput) {
       loginInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handleAuthAction();
+        if (e.key === 'Enter') {
+          const user = this.parseUserFromInput(loginInput.value);
+          performLoginTransition(user);
+        }
       });
     }
     if (passwordInput) {
       passwordInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handleAuthAction();
+        if (e.key === 'Enter') {
+          const user = this.parseUserFromInput(loginInput ? loginInput.value : '');
+          performLoginTransition(user);
+        }
       });
     }
 
